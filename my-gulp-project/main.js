@@ -8,6 +8,18 @@ let prizes = [
   { text: "NO", color: "hsl(27 87% 67%)" }
 ];
 
+let prizesTwo = [
+  { text: "YES", color: "hsl(197 30% 43%)" },
+  { text: "NO", color: "hsl(173 58% 39%)" },
+  { text: "MAYBE", color: "hsl(2 34% 47%)" },
+  { text: "YES", color: "hsl(43 74% 66%)" },
+  { text: "NO", color: "hsl(27 87% 67%)" },
+  { text: "MAYBE", color: "hsl(2 34% 47%)" },
+  { text: "YES", color: "hsl(43 74% 66%)" },
+  { text: "NO", color: "hsl(27 87% 67%)" },
+  { text: "MAYBE", color: "hsl(2 34% 47%)" },
+];
+
 
 const wheel = document.querySelector(".deal-wheel");
 const spinner = wheel.querySelector(".spinner");
@@ -138,25 +150,101 @@ document.getElementById("btn-one").onclick = () => {
     prizes.splice(1, 4); // Remove 4 items starting from index 1
     console.log("Updated Prizes:", prizes);
     setupWheel(); // Re-render the wheel with updated prizes
+  } else if (prizes.length === 4) {
+    prizes.splice(1, 2);
+    console.log("Updated Prizes:", prizes);
+    setupWheel();
   }
 }
 
 
 document.getElementById("btn-two").onclick = () => {
   if (prizes.length === 6) { // Only run if there are 6 prizes
-    prizes.splice(1, 2); // Remove 4 items starting from index 1
+    prizes.splice(1, 2); // Remove 2 items starting from index 1
     console.log("Updated Prizes:", prizes);
     setupWheel(); // Re-render the wheel with updated prizes
-  }
-}
-
-document.getElementById("btn-three").onclick = () => {
-  if (prizes.length === 6) { // Only run if there are 6 prizes
-    prizes.splice(1, 0); // Remove 4 items starting from index 1
+  } else if (prizes.length === 2 ) {
+    prizes.push(
+      { text: "YES", color: "hsl(2 34% 47%)" },
+      { text: "NO", color: "hsl(161, 47%, 65%)" }
+    )
     console.log("Updated Prizes:", prizes);
     setupWheel(); // Re-render the wheel with updated prizes
   } 
 }
+
+document.getElementById("btn-three").onclick = () => {
+  if (prizes.length === 6) { 
+    // Only run if there are exactly 6 prizes
+    prizes.splice(1, 0); // Adjust to actually remove an item if needed
+    console.log("Updated Prizes:", prizes);
+    setupWheel(); // Re-render the wheel with updated prizes
+  } else if (prizes.length === 4) { 
+    // Only run if there are exactly 4 prizes
+    prizes.push(
+      { text: "YES", color: "hsl(2 34% 47%)" },
+      { text: "NO", color: "hsl(161, 47%, 65%)" }
+    );
+    console.log("Updated Prizes:", prizes);
+    setupWheel(); // Ensure the wheel is updated with new prizes
+  } else if (prizes.length === 2){
+    prizes.push(
+      { text: "YES", color: "hsl(2 34% 47%)" },
+      { text: "NO", color: "hsl(161, 47%, 65%)" },
+      { text: "YES", color: "hsl(2 34% 47%)" },
+      { text: "NO", color: "hsl(161, 47%, 65%)" }
+    )
+    console.log("Updated Prizes:", prizes);
+    setupWheel(); // Re-render the wheel with updated prizes
+  }
+};
+
+
+let usingPrizesTwo = false;
+
+// Set up "Maybe" button to toggle between prizes sets
+document.getElementById("btn-maybe").onclick = () => {
+  if (!usingPrizesTwo) {
+    // Switch to prizesTwo
+    prizes = [...prizesTwo];
+    usingPrizesTwo = true;
+  } else {
+    // Revert to original prizes set
+    prizes = [
+      { text: "YES", color: "hsl(197 30% 43%)" },
+      { text: "NO", color: "hsl(173 58% 39%)" },
+      { text: "YES", color: "hsl(43 74% 66%)" },
+      { text: "NO", color: "hsl(27 87% 67%)" },
+      { text: "YES", color: "hsl(43 74% 66%)" },
+      { text: "NO", color: "hsl(27 87% 67%)" }
+    ];
+    usingPrizesTwo = false;
+  }
+
+  console.log("Updated Prizes (Maybe):", prizes);
+  setupWheel();  // Re-render the wheel with the selected prizes array
+};
+
+// "Yes or No" button to reset back to the default prize set
+document.getElementById("btn-yesOrNo").onclick = () => {
+  prizes = [
+    { text: "YES", color: "hsl(197 30% 43%)" },
+    { text: "NO", color: "hsl(173 58% 39%)" },
+    { text: "YES", color: "hsl(43 74% 66%)" },
+    { text: "NO", color: "hsl(27 87% 67%)" },
+    { text: "YES", color: "hsl(43 74% 66%)" },
+    { text: "NO", color: "hsl(27 87% 67%)" }
+  ];
+  usingPrizesTwo = false;
+
+  console.log("Reset Prizes to Original (Yes/No):", prizes);
+  setupWheel();  // Re-render the wheel with the original prizes array
+};
+
+
+
+
+
 
 
 // Initialize wheel setup
